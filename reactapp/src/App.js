@@ -42,7 +42,7 @@ class App extends React.Component {
   }
   fetchTasks(){
     console.log('Fetching...')
-    fetch('https://react-django-to-do-list.herokuapp.com/')
+    fetch('http://127.0.0.1:8000/api/task-list/')
     .then(response => response.json())
     .then(data => 
       this.setState({
@@ -55,7 +55,6 @@ class App extends React.Component {
     var value = e.target.value
     console.log('Name:', name)
     console.log('Value:', value)
-
     this.setState({
       activeItem:{
         ...this.state.activeItem,
@@ -63,17 +62,13 @@ class App extends React.Component {
       }
     })
   }
-
   handleSubmit(e){
     e.preventDefault()
     console.log('ITEM:', this.state.activeItem)
-
     var csrftoken = this.getCookie('csrftoken')
-
-    var url = 'http://react-django-to-do-list/api/task-create/.herokuapp.com'
-
+    var url = 'http://127.0.0.1:8000/api/task-create/'
     if(this.state.editing == true){
-      url = `http://react-django-to-do-list/api/task-update/${ this.state.activeItem.id}/.herokuapp.com`
+      url = `http://127.0.0.1:8000/api/task-update/${ this.state.activeItem.id}/`
       this.setState({
         editing:false
       })
@@ -97,7 +92,6 @@ class App extends React.Component {
     }).catch(function(error){
       console.log('ERROR:', error)
     })
-
   }
   startEdit(task){
     this.setState({
@@ -107,7 +101,7 @@ class App extends React.Component {
   }
   deleteItem(task){
     var csrftoken = this.getCookie('csrftoken')
-    fetch(`http://react-django-to-do-list/api/task-delete/${task.id}/.herokuapp.com`, {
+    fetch(`http://127.0.0.1:8000/api/task-delete/${task.id}/`, {
       method:'DELETE',
       headers:{
         'Content-type':'application/json',
@@ -120,7 +114,7 @@ class App extends React.Component {
   strikeUnstrike(task){
     task.completed = !task.completed
     var csrftoken = this.getCookie('csrftoken')
-    var url = `http://react-django-to-do-list/api/task-update/${task.id}/herokuapp.com`
+    var url = `http://127.0.0.1:8000/api/task-update/${task.id}/`
       fetch(url, {
         method:'POST',
         headers:{
@@ -131,7 +125,6 @@ class App extends React.Component {
       }).then(() => {
         this.fetchTasks()
       })
-
     console.log('TASK:', task.completed)
   }
   render(){
@@ -160,20 +153,20 @@ class App extends React.Component {
                                 {task.completed == false ? (
                                     <span>{task.title}</span>
                                   ) : (
-                                    <strike>{task.title}</strike>
+                                   <strike>{task.title}</strike>
                                   )}
                             </div>
                             <div style={{flex:1}}>
                                 <button onClick={() => self.startEdit(task)} className="btn btn-sm btn-outline-info">Edit</button>
                             </div>
-                           <div style={{flex:1}}>
+                            <div style={{flex:1}}>
                                 <button onClick={() => self.deleteItem(task)} className="btn btn-sm btn-outline-dark delete">-</button>
                             </div>
                           </div>
                         )
                     })}
               </div>
-          </div>
+          </div>          
         </div>
       )
   }
