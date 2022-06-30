@@ -126,7 +126,7 @@ USE_TZ = True
 STATIC_ROOT = os.path.join(BASE_DIR,'static'),
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-     os.path.join(BASE_DIR, 'react/build/static')
+     os.path.join(BASE_DIR, 'reactapp/build/static')
 ]
 django_heroku.settings(locals())
 CORS_ORIGIN_WHITELIST = [
