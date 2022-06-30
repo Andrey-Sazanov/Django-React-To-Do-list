@@ -130,6 +130,8 @@ STATICFILES_DIRS = [
 ]
 django_heroku.settings(locals())
 CORS_ORIGIN_WHITELIST = [
-    "https://react-django-to-do-list.heroku.com",
+    "http://localhost:3000",
 ]
+
+
 
